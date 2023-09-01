@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Roboto:ital@0;1&display=swap');
+
+.layout {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2.8fr 1.2fr;
+  grid-column-gap: 0.5vw;
+  
+  margin-top: 4vw;
+  padding: 0 0.5vw 0 0.5vw;
+}
