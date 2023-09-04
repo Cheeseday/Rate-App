@@ -15,7 +15,7 @@ export const Exchange = () => {
         <div className='exchangeContent'>
           <div>
             <p>
-              Base currency: &nbsp; &nbsp; Date: {}
+              Base currency: {state.base} &nbsp; Date: {state.date}
             </p>
           </div>
           <ul>

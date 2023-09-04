@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import './header.scss';
 import { Navbar } from "../navbar/Navbar";
 
@@ -8,11 +9,11 @@ export const Header = () => {
     <header className='header'>
       <div className="headerWrap">
         <div className='logo'>
-          <a href='/'>
+          <NavLink to='/'>
             <h2>
               Rate App
             </h2>
-          </a>
+          </NavLink>
         </div>
 
         <Navbar/>
