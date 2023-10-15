@@ -4,7 +4,7 @@ import { RateContext } from "../../context/RateContext";
 import { Button } from "../button/Button";
 
 export const Counter = () => {
-  const { state, inputValueHandler, currencyValueHandler, calculatorHandler } = useContext(RateContext);
+  const { state, inputValueHandler, currencyValueHandler, calculatorHandler, exchangedCurrencyHandler } = useContext(RateContext);
 
   return(
     <div className="calc_head">
@@ -18,16 +18,27 @@ export const Counter = () => {
         <span>
           <input type="number" 
                  value={state.inputValue}
-                 onChange={inputValueHandler}/>&nbsp; USD
+                 onChange={inputValueHandler}/>&nbsp;
+          <select onChange={exchangedCurrencyHandler} value={state.base} className="exchangedCurrency">
+            {Object.keys(state.currency).map((item) => {
+              return(
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              )
+            })}
+          </select>
         </span>
-
-        <select onChange={currencyValueHandler}>
-          {Object.keys(state.currency).map((item, index) => {
-            return(
-              <option key={item}>
-                {item}
-              </option>
-            )
+            {/* Desired currency */}
+        <select onChange={currencyValueHandler} >
+          {Object.keys(state.currency).map((item) => {
+            if(item !== state.base) {
+              return (
+                <option key={item}>
+                  {item}
+                </option>
+              )
+            }
           })}
         </select>
 
@@ -35,6 +46,5 @@ export const Counter = () => {
         <Button text = 'Calculate' click={calculatorHandler} arg={state.currencyValue}/>
       </div>
     </div>
-
   )
 }

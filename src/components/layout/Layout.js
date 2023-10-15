@@ -17,7 +17,7 @@ const Layout = () => {
       <div className='content'>
         <div className='routes'>
           <Routes>
-            <Route path="/" exact element={<Home />}/> 
+            <Route path="/" element={<Home />}/> 
             <Route path="/calc" element={<Calc />}/> 
             <Route path="/sample" element={<Sample />}/> 
             <Route path="/info" element={<Info />}/> 

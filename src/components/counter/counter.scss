@@ -2,8 +2,13 @@
     display: grid;
     grid-template-columns: 2fr 1fr 0.5fr;
     grid-column-gap: 1vw;
+    
+    .exchangedCurrency {
+        height: 99%;
+        width: 70px;
+    }
 
     input {
-        height: 24px;
+        height: 28.03px;
     }
 }

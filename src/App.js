@@ -8,8 +8,8 @@ import CNY from './image/CNY.png';
 import EUR from './image/EUR.png';
 import GBP from './image/GBP.png';
 import JPY from './image/JPY.png';
-import RUB from './image/RUB.png';
 import USD from './image/USD.png';
+import PLN from './image/PLN.png';
 
 class App extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class App extends React.Component {
         CNY: {name: 'Chinese yuan', flag: CNY, course: ''},
         GBP: {name: 'British pound', flag: GBP, course: ''},
         JPY: {name: 'Japanese yen', flag: JPY, course: ''},
-        RUB: {name: 'Russian ruble', flag: RUB, course: ''},
+        PLN: {name: 'Polish zloty', flag: PLN, course: ''},
       },
 
       //calculator
@@ -35,51 +35,65 @@ class App extends React.Component {
       result: null,
     }
   }
+  exchangedCurrencyHandler = (event) => {
+    this.setState({
+      base: event.target.value
+    })
+  }
 
   inputValueHandler = (event) => {
     this.setState({
       inputValue: event.target.value,
       result: null
-    })
+    });
   }
 
   currencyValueHandler = (event) => {
     this.setState({
       currencyValue: event.target.value,
       result: null
-    })
+    });
   }
 
   calculatorHandler = async (value) => {
     let result;
+    const host = 'api.frankfurter.app';
+    const origin = `https://${host}`;
 
-    await fetch(`https://openexchangerates.org/api/latest.json?app_id=46a87715010d4ee5853fcf260fb319bc `)
+    await fetch(`${origin}/latest?amount=${this.state.inputValue}&from=${this.state.base}&to=${this.state.currencyValue}`)
       .then((response) => response.json())
       .then((response) => {
-        result = (response.rates[value] * this.state.inputValue).toFixed(2);
-      })
+        result = response.rates[value].toFixed(2);
+      });
     this.setState({
       result
-    })
-    console.log(result);
+    });
   }
 
   componentDidMount() {
-    fetch(`https://openexchangerates.org/api/latest.json?app_id=46a87715010d4ee5853fcf260fb319bc`)
-    .then((response) => response.json())
-    .then((response) => {
-      const rateArr = ['USD','CNY', 'EUR', 'CHF', 'GBP', 'JPY', 'RUB'];
-      const currency = {...this.state.currency};
-      for(let i = 0; i < rateArr.length; i++){
-        currency[rateArr[i]].course = response.rates[rateArr[i]];
-      }
+    const host = 'api.frankfurter.app';
+    const origin = `https://${host}`;
 
-      this.setState({
-        rate: response.rates,
-        date: new Date(response.timestamp * 1000).toLocaleString(),
-        currency
+    fetch(`${origin}/latest?from=${this.state.base}`)
+    .then(response => response.json())
+      .then(response => {
+        const rateArr = ['USD', 'CNY', 'EUR', 'CHF', 'GBP', 'JPY', 'PLN'];
+        const currency = {...this.state.currency};
+        for(let i = 0; i < rateArr.length; i++){
+          if(response.rates[rateArr[i]]) {
+            currency[rateArr[i]].course = response.rates[rateArr[i]].toFixed(4);
+          }
+          else if(rateArr[i] === this.state.base) {
+            currency[rateArr[i]].course = '1.0000';
+          }
+        }
+
+        this.setState({
+            rate: response.rates,
+            date: response.date,
+            currency
+        });
       })
-    })
 
   }
   
@@ -89,6 +103,7 @@ class App extends React.Component {
                                       inputValueHandler: this.inputValueHandler,
                                       currencyValueHandler: this.currencyValueHandler,
                                       calculatorHandler: this.calculatorHandler,
+                                      exchangedCurrencyHandler: this.exchangedCurrencyHandler, 
                                     }}>
         <Layout/>
       </RateContext.Provider>

@@ -7,13 +7,13 @@ export const Info = () => {
   return(
     <div className="info">
       <h2>
-        Currecny conversion application
+        Currency conversion application
       </h2>
       <p>
-        Author: Aleś Kiryluškin
+        Author: Aliaksandr Kirylushkin
       </p>
       <p>  
-        Mail: aleksandrkirilushkin@gmail.com
+        Email: aleksandrkirilushkin@gmail.com
       </p>
     </div>
   )

@@ -13,7 +13,7 @@ export const CountResult = () => {
         {state.result ? 
           <li>
             <p>
-              <span>{state.inputValue} USD</span>
+              <span>{state.inputValue} {state.base}</span>
               &nbsp;=&nbsp;
               <span>{state.result} {state.currencyValue}</span>
             </p>
