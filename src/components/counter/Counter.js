@@ -29,20 +29,16 @@ export const Counter = () => {
             })}
           </select>
         </span>
-            {/* Desired currency */}
         <select onChange={currencyValueHandler} >
           {Object.keys(state.currency).map((item) => {
-            if(item !== state.base) {
-              return (
-                <option key={item}>
-                  {item}
-                </option>
-              )
-            }
+            return (
+              <option key={item}>
+                {item}
+              </option>
+            )
           })}
         </select>
 
-        {/* <button onClick={() => calculatorHandler(state.currencyValue)}>Calculate</button> */}
         <Button text = 'Calculate' click={calculatorHandler} arg={state.currencyValue}/>
       </div>
     </div>

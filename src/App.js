@@ -37,7 +37,8 @@ class App extends React.Component {
   }
   exchangedCurrencyHandler = (event) => {
     this.setState({
-      base: event.target.value
+      base: event.target.value,
+      result: null
     })
   }
 
@@ -64,7 +65,14 @@ class App extends React.Component {
       .then((response) => response.json())
       .then((response) => {
         result = response.rates[value].toFixed(2);
-      });
+      })
+      .catch((error) => {
+        if(error instanceof TypeError) {
+          result = this.state.inputValue;
+        } else {
+          throw error;
+        }
+      })
     this.setState({
       result
     });
