@@ -25,6 +25,7 @@ export const Exchange = () => {
                   <li key={item}>
                     <span>
                       <img src={currency[item].flag} alt={currency[item].name}/>
+                        &nbsp;
                         {item}
                     </span>
                     <span>

@@ -5,7 +5,7 @@ import { Button } from "../../components/button/Button";
 
 
 export const Sample = () => {
-  const { state } = useContext(RateContext);
+  const { state, exchangedValueHandler, desiredValueHandler, sampleDateHandler, writeData, sampleRemove } = useContext(RateContext);
 
   return(
     <div className="sample">
@@ -15,18 +15,18 @@ export const Sample = () => {
           <h3>
             Get a course: &nbsp;
 
-            <select>
+            <select onChange={exchangedValueHandler} value={state.sample.exchangedValue}>
               {Object.keys(state.currency).map((item, index) => {
                 return(
-                  <option key={item}>{item}</option>
+                  <option key={index} value={item}>{item}</option>
                 )
               })}
             </select>
             &nbsp;&nbsp; to &nbsp;&nbsp;
-            <select>
+            <select onChange={desiredValueHandler} value={state.sample.desiredValue}>
               {Object.keys(state.currency).map((item, index) => {
                 return(
-                  <option key={item}>{item}</option>
+                  <option key={index} value={item}>{item}</option>
                 )
               })}
             </select>
@@ -36,14 +36,24 @@ export const Sample = () => {
         <div className="sample_head">
           <span>
             Date: 
-            <input type="date"/>
+            <input type="date" onChange={sampleDateHandler}/>
           </span>
-          <Button text='Get course'/>
+          <Button text='Get course' click={writeData}/>
         </div>
 
         <div className="sample_result">
           <ul>
-
+              {Object.keys(state.sampleList).map((item) => {
+                return (
+                  <li key={item}>
+                    <span>1 {state.sampleList[item].exchangedValue} &nbsp;<img src={state.currency[state.sampleList[item].exchangedValue].flag} alt={item}/></span>
+                    =
+                    <span>{`${state.sampleList[item].course} ${state.sampleList[item].desiredValue}`}&nbsp;<img src={state.currency[state.sampleList[item].desiredValue].flag} alt={item}/></span>
+                    <span>{state.sampleList[item].date}</span>
+                    <button onClick={() => sampleRemove(item)}><i className="fa fa-times"/></button>
+                  </li>
+                )
+              })}
           </ul>
         </div>
       </div>

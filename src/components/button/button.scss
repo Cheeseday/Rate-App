@@ -18,6 +18,10 @@ $border-color: #BFC4CD;
   -o-border-radius: 6px;
   
   cursor: pointer;
+
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
 }
 
 @media(hover: hover) {
