@@ -4,6 +4,9 @@ import Layout from './components/layout/Layout';
 import { RateContext } from './context/RateContext';
 import axios from 'axios';
 import { flushSync } from 'react-dom';
+import { Input } from './components/input/Input';
+import { Dark } from './components/dark/Dark';
+import { Modal } from './components/modal/Modal';
 
 import CHF from './image/CHF.png';
 import CNY from './image/CNY.png';
@@ -13,11 +16,47 @@ import JPY from './image/JPY.png';
 import USD from './image/USD.png';
 import PLN from './image/PLN.png';
 
+function validateEmail(email) {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
+}
+
 class App extends React.Component {
   constructor(props) {
     
     super(props);
     this.state = {
+      formControls: {
+        email: {
+          value: '',
+          type: 'email',
+          label: 'Email',
+          errorMessage: 'Enter a correct email',
+          placeholder: 'email@address.com',
+          valid: false,
+          touched: false,
+          isRequired: true,
+          validation: {
+            required: true,
+            email: true,
+          },
+        },
+        password: {
+          value: '',
+          type: 'password',
+          label: 'Password',
+          errorMessage: 'Enter a correct password',
+          placeholder: 'Must have at least 8 characters',
+          valid: false,
+          touched: false,
+          isRequired: true,
+          validation: {
+            required: true,
+            minLength: 8,
+          }
+        },
+      },
+
       base: 'USD',
       rate: '',
       date: '',
@@ -44,7 +83,67 @@ class App extends React.Component {
         date: '',
       },
       sampleList: '',
+
+      showModal: false,
     }
+  }
+
+  showModalHandler = () => {
+    this.setState({showModal: true})
+  }
+
+  hideModalHandler = () => {
+    this.setState({showModal: false})
+  }
+
+  validateControl(value, validation) {
+    if(!validation) {
+      return true;
+    }
+    let isValid = true;
+    if(validation.required) {
+      isValid = isValid && value.trim() !== ''; 
+    }
+    if(validation.email) {
+      isValid = isValid && validateEmail(value);
+    }
+    if(validation.minLength) {
+      isValid = isValid && value.length >= validation.minLength;
+    }
+    return isValid;
+  }
+
+  onChangeHandler = (event, controlName) => {
+    const formControls = {...this.state.formControls};
+    const control = {...formControls[controlName]};
+
+    control.value = event.target.value;
+    control.touched = true;
+    control.valid = this.validateControl(control.value, control.validation);
+
+    formControls[controlName] = control;
+
+    this.setState({formControls});
+  } 
+
+  renderInputs = () => {
+    return Object.keys(this.state.formControls).map((controlName, index) => {
+      const control = this.state.formControls[controlName];
+      return (
+        <Input
+          key={controlName + index}
+          type={control.type}
+          value={control.value}
+          valid={control.valid}
+          touched={control.touched}
+          label={control.label}
+          placeholder={control.placeholder}
+          errorMessage={control.errorMessage}
+          shouldValidate={true}
+          onChange={(event) => this.onChangeHandler(event, controlName)}
+        />
+      )
+    })
   }
 
   exchangedValueHandler = (event) => {
@@ -186,8 +285,13 @@ class App extends React.Component {
                                       desiredValueHandler: this.desiredValueHandler,
                                       sampleDateHandler: this.sampleDateHandler,
                                       writeData: this.writeData,
-                                      sampleRemove: this.sampleRemove
+                                      sampleRemove: this.sampleRemove,
+                                      renderInputs: this.renderInputs,
+                                      showModalHandler: this.showModalHandler,
+                                      hideModalHandler: this.hideModalHandler,
                                     }}>
+        <Dark showModal={this.state.showModal} hideModalHandler={this.hideModalHandler}/>
+        <Modal/>
         <Layout/>
       </RateContext.Provider>
     )
