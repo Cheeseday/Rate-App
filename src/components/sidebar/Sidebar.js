@@ -8,10 +8,10 @@ export const Sidebar = () => {
 
   return(
     <div className='sidebar'>
-      <div className='sidebarHead'>
+      <div className='sidebar_head'>
         <h3>All currency</h3>
       </div>
-      <div className='sidebarContent'>
+      <div className='sidebar_content'>
         <ul>
           {
             Object.keys(state.currency).map((item, index) => {

@@ -9,7 +9,7 @@ export const Header = () => {
   
   return(
     <header className='header'>
-      <div className="headerWrap">
+      <div className="header_wrap">
         <div className='logo'>
           <NavLink to='/'>
             <h2>

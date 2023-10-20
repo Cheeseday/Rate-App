@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Roboto:ital@0;1&display=swap');
+@import '../../variables.scss';
 
 nav {
   text-align: center;
@@ -18,18 +19,22 @@ nav {
       display: inline-block;
       align-self: center;
 
-      transition: all .2s ease-in;
-
       a {
         font-family: 'Roboto', sans-serif;
         font-size: 1vw;
-        color: #223046;
+        font-weight: 400;
+        color: $dark-base-color;
+        display: block;
 
         text-decoration: none;
 
+        transition: transform 0.3s ease-in-out;
       }
-      a:hover {
-        color: black;
+
+      @media(hover: hover) {
+        a:hover {
+          transform: scale(1.1, 1.1);
+        }
       }
     }
   }

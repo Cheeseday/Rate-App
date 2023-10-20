@@ -1,16 +1,18 @@
+@import '../../variables.scss';
+
 .sidebar {
-  border: 1px solid #BFC4CD;
+  border: 1px solid $border-color;
 }
 
-.sidebarHead {
+.sidebar_head {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  border-bottom: 1px solid #BFC4CD;
+  border-bottom: 1px solid $border-color;
 }
 
-.sidebarContent {
+.sidebar_content {
   ul {
     margin: 0;
     padding: 0;
@@ -22,7 +24,7 @@
       justify-content: flex-start;
 
       padding-left: 25%;
-      border-bottom: 1px solid #BFC4CD;
+      border-bottom: 1px solid $border-color;
 
       img {
         width: 20px;

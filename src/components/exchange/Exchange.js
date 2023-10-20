@@ -10,9 +10,9 @@ export const Exchange = () => {
 
   return(
     <div className='exchange'>
-      <div className='exchangeContainer'>
+      <div className='exchange_container'>
         
-        <div className='exchangeContent'>
+        <div className='exchange_content'>
           <div>
             <p>
               Base currency: {state.base} &nbsp; Date: {state.date}

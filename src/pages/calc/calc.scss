@@ -1,6 +1,8 @@
+@import '../../variables.scss';
+
 .calculator {
   min-height: 16vw;
-  border: 1px solid #BFC4CD;
+  border: 1px solid $border-color;
 }
 
 .calc_container {

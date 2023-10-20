@@ -1,7 +1,9 @@
+@import '../../variables.scss';
+
 .info {
   min-height: 16vw;
   padding: 1vw;
-  border: 1px solid #BFC4CD;
+  border: 1px solid $border-color;
 
   p {
     margin: 6px;
